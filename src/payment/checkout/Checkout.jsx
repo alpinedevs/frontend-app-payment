@@ -88,8 +88,6 @@ class Checkout extends React.Component {
 
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
-    // istanbul ignore next
-    const cybersourceIsSubmitting = submitting && paymentMethod === 'cybersource';
 
     if (isFreeBasket) {
       return (
@@ -112,13 +110,6 @@ class Checkout extends React.Component {
           </h5>
 
           <p className="d-flex flex-wrap">
-            <button type="button" className="payment-method-button active">
-              <img
-                src={AcceptedCardLogos}
-                alt={intl.formatMessage(messages['payment.page.method.type.credit'])}
-              />
-            </button>
-
             <PayPalButton
               onClick={this.handleSubmitPayPal}
               className={classNames('payment-method-button', { 'skeleton-pulse': loading })}
@@ -129,17 +120,6 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/edx/frontend-app-payment/pull/256 */}
           </p>
         </div>
-
-        <PaymentForm
-          onSubmitPayment={this.handleSubmitCybersource}
-          onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
-          disabled={submitting}
-          loading={loading}
-          loaded={loaded}
-          isProcessing={cybersourceIsSubmitting}
-          isBulkOrder={isBulkOrder}
-          isQuantityUpdating={isQuantityUpdating}
-        />
       </>
     );
   }
@@ -165,7 +145,7 @@ Checkout.propTypes = {
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
-  paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
+  paymentMethod: PropTypes.oneOf(['paypal']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
 };
 
